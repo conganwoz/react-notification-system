@@ -65,7 +65,7 @@ var NotificationSystem = createReactClass({
 
   _didNotificationRemoved: function(uid) {
     var notification;
-    if(this._isMounted) {
+    if (this._isMounted) {
       this.setState(prevState => {
         var notifications = prevState.notifications.filter(function(toCheck) {
           if (toCheck.uid === uid) {
@@ -76,12 +76,12 @@ var NotificationSystem = createReactClass({
         });
         return {
           notifications: notifications
-        }
+        };
       }, () => {
         if (notification && notification.onRemove) {
           notification.onRemove(notification);
         }
-      })
+      });
     }
   },
 
@@ -148,13 +148,13 @@ var NotificationSystem = createReactClass({
 
     this.setState(prevState => {
       return {
-        notifications: [...prevState.notifications.filter(item => item.uid != _notification.uid), _notification]
-      }
+        notifications: prevState.notifications.filter(item => item.uid !== _notification.uid).concat([_notification])
+      };
     }, () => {
       if (typeof _notification.onAdd === 'function') {
         notification.onAdd(_notification);
       }
-    })
+    });
 
     return _notification;
   },
